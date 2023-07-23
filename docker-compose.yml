@@ -1,0 +1,17 @@
+version: '3'
+services:
+  vtoonify:
+    container_name: vtoonify
+    image: vtoonify:1.0
+    volumes:
+      - /data/dataset/input/vtoonify:/data/dataset/input/vtoonify
+      - /data/dataset/output/vtoonify:/data/dataset/output/vtoonify
+      - /data/workspace/williamyang1991/VToonify/checkpoint:/data/workspace/williamyang1991/VToonify/checkpoint
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    command: [ "/bin/bash", "-c", "source activate vtoonify_env && python style_transfer_server.py --scale_image --style_id 21 --style_degree 0.5 --ckpt ./checkpoint/vtoonify_d_arcane/vtoonify_s_d.pt --padding 600 600 600 600 --cpu"]
+      #command: [ "/bin/bash", "-c", "source activate vtoonify_env && python style_transfer_server.py --scale_image --backbone toonify --ckpt ./checkpoint/vtoonify_t_cartoon/vtoonify.pt --padding 600 600 600 600 --cpu"]
+
+
+
